@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--suppress JSUnresolvedLibraryURL -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OTP Designer jQuery Plugin - Basic Usage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="card mt-5 p-3">
+        <h1 class="h1">OTP Designer jQuery Plugin - Basic Usage</h1>
+        <div id="otp_target"></div>
+        <button class="btn btn-primary mt-3" id="ok">OK</button>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script src="dist/otpdesigner.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#otp_target').otpdesigner({
+            typingDone: function (code) {
+                console.log('Entered OTP code: ' + code);
+            },
+        });
+
+        $('#ok').on('click', function () {
+            let result = $('#otp_target').otpdesigner('code');
+            if (result.done) {
+                alert('Entered OTP code: ' + result.code);
+            } else {
+                alert('Typing incomplete!');
+            }
+        });
+    });
+</script>
+</body>
+</html>
