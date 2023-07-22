@@ -578,7 +578,8 @@ const otpdesigner = function (options = {}, ...args) {
                     onlyNumbers: false,
                     inputsClasses: '',
                     inputsParentClasses: '',
-                    typingDone : function () {}
+                    enterClicked: null,
+                    typingDone : null
                 },
                 options
             );
@@ -633,6 +634,14 @@ const otpdesigner = function (options = {}, ...args) {
                     if (event.key === "Backspace") {
                         $inputs[i].value = "";
                         if (i !== 0) $inputs[i - 1].focus();
+                    } else if (event.key === "Enter" && i === $inputs.length - 1 && $inputs[i].value !== "") {
+                        event.preventDefault();
+                        collectOtpCode(data, false);
+                        if (settings.enterClicked != null) {
+                            settings.enterClicked();
+                        }
+                        loseFocus(data);
+                        return;
                     } else {
                         if (event.keyCode > 95 && event.keyCode < 106) {
                             $inputs[i].value = event.key;
@@ -679,15 +688,25 @@ let stringToBool = function (s) {
     return ['true', 'TRUE', '1'].includes(s.toString());
 }
 
-let collectOtpCode = (data) => {
+let collectOtpCode = (data, typingDone = true) => {
     let $inputs = $('#otp_' + data.idSuffix).find('.otp-input');
     let code = '';
     $inputs.each(function (i, e) {
         code += $(e).val().trim();
     });
     $('#otp_hidden_' + data.idSuffix).val(code);
-    if (code.length === $inputs.length) data.settings.typingDone(code);
+    if (code.length === $inputs.length && typingDone) {
+        if (data.settings.typingDone != null) {
+            data.settings.typingDone(code);
+        }
+        loseFocus(data);
+    }
 }
+
+let loseFocus = (data) => {
+    if (data.settings.enterClicked != null) return;
+    $('.otp-input:focus').blur();
+};
 ;// CONCATENATED MODULE: ./index.js
 
 

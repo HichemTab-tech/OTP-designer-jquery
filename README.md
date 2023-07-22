@@ -234,13 +234,14 @@ $('#otp_target').otpdesigner({
 In these examples, the OTP designer is initialized inside the otp_target element with different configurations. The first example demonstrates the basic usage without custom options, while the second example shows a customized OTP input with larger input fields and a length of 8 digits. The third example demonstrates using options as an object to customize the OTP input.
 ## Options
 
-| **Option**                | **Type** | **Default**  | **Description**                                                                  |
-|---------------------------|----------|--------------|----------------------------------------------------------------------------------|
-| **`length`**              | Integer  | 6            | The number of OTP input fields.                                                  |
-| **`onluNumbers`**         | Boolean  | false        | Allow only numeric input.                                                        |
-| **`inputsClasses`**       | String   | ""           | Additional CSS classes to apply to the OTP input fields.                         |
-| **`inputsParentClasses`** | String   | ""           | Additional CSS classes to apply to the parent container of the OTP input fields. |
-| **`typingDone`**          | Function | (code) => {} | A callback function executed when the user completes typing the OTP.             |
+| **Option**                | **Type** | **Default** | **Description**                                                                      |
+|---------------------------|----------|-------------|--------------------------------------------------------------------------------------|
+| **`length`**              | Integer  | 6           | The number of OTP input fields.                                                      |
+| **`onluNumbers`**         | Boolean  | false       | Allow only numeric input.                                                            |
+| **`inputsClasses`**       | String   | ""          | Additional CSS classes to apply to the OTP input fields.                             |
+| **`inputsParentClasses`** | String   | ""          | Additional CSS classes to apply to the parent container of the OTP input fields.     |
+| **`typingDone`**          | Function | null        | A callback function executed when the user completes typing the OTP.                 |
+| **`enterClicked`**        | Function | null        | A callback function executed when the user click on Enter key when he's done typing. |
 
 ## Methods
 The OTP Designer jQuery Plugin provides the following method:
