@@ -69,7 +69,7 @@ To use the OTP Designer jQuery Plugin, follow these steps:
 - Create a target element in your HTML to initialize the OTP designer. You can use either options as an object or attributes to customize the OTP designer:
 ```HTML
 <!-- Option 1: Using attributes -->
-<div id="otp_target" data-input-classes="some-class text-danger" data-otp-length="4"></div>
+<div id="otp_target" data-inputs-classes="some-class text-danger" data-otp-length="4"></div>
 
 <!-- Option 2: Using options as an object -->
 <div id="otp_target"></div>
@@ -92,7 +92,7 @@ $('#otp_target').otpdesigner({
   },
   length: 4,
   onlyNumbers: false,
-  inputClasses: 'some-class text-danger',
+  inputsClasses: 'some-class text-danger',
 });
 
 ```
@@ -158,7 +158,7 @@ $('#otp_target').otpdesigner({
   <div class="container">
     <div class="card mt-5 p-3">
       <h1 class="h1">OTP Designer jQuery Plugin - Customized OTP Input</h1>
-      <div id="otp_target" data-input-classes="form-control-lg" data-otp-length="8"></div>
+      <div id="otp_target" data-inputs-classes="form-control-lg" data-otp-length="8"></div>
       <button class="btn btn-primary mt-3" id="ok">OK</button>
     </div>
   </div>
@@ -215,7 +215,7 @@ $('#otp_target').otpdesigner({
         },
         length: 4,
         onlyNumbers: false,
-        inputClasses: 'some-class text-danger',
+        inputsClasses: 'some-class text-danger',
       });
 
       $('#ok').on('click', function () {
@@ -238,7 +238,7 @@ In these examples, the OTP designer is initialized inside the otp_target element
 |---------------------------|----------|--------------|----------------------------------------------------------------------------------|
 | **`length`**              | Integer  | 6            | The number of OTP input fields.                                                  |
 | **`onluNumbers`**         | Boolean  | false        | Allow only numeric input.                                                        |
-| **`inputClasses`**        | String   | ""           | Additional CSS classes to apply to the OTP input fields.                         |
+| **`inputsClasses`**       | String   | ""           | Additional CSS classes to apply to the OTP input fields.                         |
 | **`inputsParentClasses`** | String   | ""           | Additional CSS classes to apply to the parent container of the OTP input fields. |
 | **`typingDone`**          | Function | (code) => {} | A callback function executed when the user completes typing the OTP.             |
 
@@ -252,7 +252,9 @@ The OTP Designer jQuery Plugin provides the following method:
 | **`code`**   | String   | The entered OTP code.                                   |
 
 - **`set`**: Set a value to the current OTP code.
-- 
+- **`focus`**: Request a focus on the OTP code input.
+- **`hiddenInput`**: Return the hidden input element which stores the OTP code value.
+
 ## Demo
 
 Here's a Demo example : 

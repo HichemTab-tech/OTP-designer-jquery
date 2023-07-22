@@ -557,6 +557,14 @@ const otpdesigner = function (options = {}, ...args) {
                 collectOtpCode(data);
             }
             return results;
+        },
+        focus: function (results, data) {
+            $('#'+optInputId + (data.settings.length - 1) + "_" + data.idSuffix).focus();
+            return results;
+        },
+        hiddenInput: function (results, data) {
+            results.push($('#otp_hidden_' + data.idSuffix));
+            return results;
         }
     };
 
@@ -568,7 +576,7 @@ const otpdesigner = function (options = {}, ...args) {
                 {
                     length: 6,
                     onlyNumbers: false,
-                    inputClasses: '',
+                    inputsClasses: '',
                     inputsParentClasses: '',
                     typingDone : function () {}
                 },
@@ -581,8 +589,8 @@ const otpdesigner = function (options = {}, ...args) {
             if (isDefined($(this).attr('data-otp-onlynumbers'))) {
                 settings.onlyNumbers = stringToBool($(this).attr('data-otp-onlynumbers'));
             }
-            if (isDefined($(this).attr('data-input-classes'))) {
-                settings.inputClasses = $(this).attr('data-input-classes');
+            if (isDefined($(this).attr('data-inputs-classes'))) {
+                settings.inputsClasses = $(this).attr('data-inputs-classes');
             }
             if (isDefined($(this).attr('data-inputs-parent-classes'))) {
                 settings.inputsParentClasses = $(this).attr('data-inputs-parent-classes');
@@ -603,6 +611,7 @@ const otpdesigner = function (options = {}, ...args) {
 
             let $hiddenInput = $('<input type="hidden">');
             $hiddenInput.attr('id', 'otp_hidden_' + idSuffix);
+            $hiddenInput.attr('name', 'otp_hidden_' + idSuffix);
             $hiddenInput.appendTo($parent);
 
             for (let i = 0; i < settings.length; i++) {
@@ -612,8 +621,8 @@ const otpdesigner = function (options = {}, ...args) {
                 if (settings.type === 'numeric') {
                     type = "number";
                 }
-                if (settings.inputClasses !== "") {
-                    $input.addClass(settings.inputClasses);
+                if (settings.inputsClasses !== "") {
+                    $input.addClass(settings.inputsClasses);
                 }
                 $input.appendTo($inputsParent);
             }
@@ -654,12 +663,12 @@ const otpdesigner = function (options = {}, ...args) {
             });
         }
         else{
-            if ( typeof options == 'string') {
+            if (typeof options === 'string' && typeof methods[options] !== 'undefined') {
                 results = methods[options](results, data, [...args]);
             }
         }
     });
-    return results.length > 1 ? results : results[0];
+    return results.length > 1 ? results : (results.length === 0 ? null : results[0]);
 }
 
 let isDefined = (variable, notEmpty = true) => {
