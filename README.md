@@ -53,7 +53,7 @@ You can install OTP-designer-jquery via npm:
 You can also include OTP-designer-jquery directly from a CDN by adding the following script tag to your HTML file:
 
 ```HTML
-    <script src="https://cdn.jsdelivr.net/gh/HichemTab-tech/OTP-designer-jquery@1.0.0/dist/otpdesigner.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/HichemTab-tech/OTP-designer-jquery@1.0.1/dist/otpdesigner.min.js"></script>
 ```
     
 ### Local Download
@@ -251,6 +251,8 @@ The OTP Designer jQuery Plugin provides the following method:
 | **`done`**   | Boolean  | A boolean indicating if the OTP code entry is complete. |
 | **`code`**   | String   | The entered OTP code.                                   |
 
+- **`set`**: Set a value to the current OTP code.
+- 
 ## Demo
 
 Here's a Demo example : 

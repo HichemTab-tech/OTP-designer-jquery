@@ -6,7 +6,6 @@ export const otpdesigner = function (options = {}, ...args) {
     // noinspection JSUnusedGlobalSymbols
     const methods = {
         code: function (results, data) {
-            console.log(data);
             let code = $('#otp_hidden_' + data.idSuffix).val();
             if (isDefined(code)) code = code.trim();
             else code = "";
@@ -14,6 +13,18 @@ export const otpdesigner = function (options = {}, ...args) {
                 done: code.length === data.settings.length,
                 code: code
             });
+            return results;
+        },
+        set: function (results, data, args) {
+            let code = args[0];
+            if (isDefined(code)) code = code.trim();
+            else code = "";
+            if (code.length === data.settings.length) {
+                for (let i = 0; i < code.length; i++) {
+                    $('#'+optInputId + (i) + "_" + data.idSuffix).val(code[i]);
+                }
+                collectOtpCode(data);
+            }
             return results;
         }
     };
