@@ -1,5 +1,5 @@
 /*!
- * OTP-designer-jquery v1.0.0
+ * OTP-designer-jquery v1.0.2
  * (c) HichemTech
  * Released under the MIT License.
  * Github: github.com/HichemTab-tech/OTP-designer-jquery
@@ -643,7 +643,7 @@ const otpdesigner = function (options = {}, ...args) {
                         loseFocus(data);
                         return;
                     } else {
-                        if (event.keyCode > 95 && event.keyCode < 106) {
+                          if ((event.keyCode > 95 && event.keyCode < 106) || (event.keyCode > 47 && event.keyCode < 58)) {
                             $inputs[i].value = event.key;
                             if (i !== $inputs.length - 1) $inputs[i + 1].focus();
                             event.preventDefault();
