@@ -1,4 +1,23 @@
-input.otp-input {
-    width: 40px;
-    height: 40px
+.otp-fake-input {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.otp-fake-input .otp-content {
+    font-size: 20px;
+    font-weight: 600;
+    color: #111;
+    padding-bottom: 1px;
+}
+
+.otp-fake-input.otpdesigner__focus__ {
+    border: 2px solid #007bff;
+}
+
+.realInput{
+    position: absolute!important;
+    z-index: -2000!important;
 }
