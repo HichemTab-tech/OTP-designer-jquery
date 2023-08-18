@@ -1,5 +1,5 @@
 /*!
- * OTP-designer-jquery v1.0.2
+ * OTP-designer-jquery v2.0.1
  * (c) HichemTech
  * Released under the MIT License.
  * Github: github.com/HichemTab-tech/OTP-designer-jquery
