@@ -23,7 +23,6 @@ export const otpdesigner = function (options = {}, ...args) {
                 for (let i = 0; i < code.length; i++) {
                     $('#'+optInputId + (i) + "_" + data.idSuffix).trigger('otp-written', [code[i]]);
                 }
-                collectOtpCode(data);
             }
             return results;
         },
