@@ -1,5 +1,5 @@
 /*!
- * OTP-designer-jquery v2.0.2
+ * OTP-designer-jquery v2.1.0
  * (c) HichemTech
  * Released under the MIT License.
  * Github: github.com/HichemTab-tech/OTP-designer-jquery
@@ -573,6 +573,12 @@ const otpdesigner = function (options = {}, ...args) {
                 for (let i = 0; i < code.length; i++) {
                     $('#'+optInputId + (i) + "_" + data.idSuffix).trigger('otp-written', [code[i]]);
                 }
+            }
+            return results;
+        },
+        clear: function (results, data) {
+            for (let i = data.settings.length - 1; i >= 0; i--) {
+                $('#'+optInputId + (i) + "_" + data.idSuffix).trigger('otp-written', ["Backspace"]);
             }
             return results;
         },

@@ -26,6 +26,12 @@ export const otpdesigner = function (options = {}, ...args) {
             }
             return results;
         },
+        clear: function (results, data) {
+            for (let i = data.settings.length - 1; i >= 0; i--) {
+                $('#'+optInputId + (i) + "_" + data.idSuffix).trigger('otp-written', ["Backspace"]);
+            }
+            return results;
+        },
         focus: function (results, data) {
             $('#'+optInputId + (data.settings.length - 1) + "_" + data.idSuffix).otpdesigner__toggleFocus__(true);
             return results;
