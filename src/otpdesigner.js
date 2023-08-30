@@ -21,19 +21,51 @@ export const otpdesigner = function (options = {}, ...args) {
             else code = "";
             if (code.length === data.settings.length) {
                 for (let i = 0; i < code.length; i++) {
-                    $('#'+optInputId + (i) + "_" + data.idSuffix).trigger('otp-written', [code[i]]);
+                    $('#'+optInputId + (i) + "_" + data.idSuffix).trigger('otp-written', [code[i], false]);
+                }
+                if (typeof data.settings.onchange === 'function') {
+                    data.settings.onchange(code);
                 }
             }
             return results;
         },
         clear: function (results, data) {
             for (let i = data.settings.length - 1; i >= 0; i--) {
-                $('#'+optInputId + (i) + "_" + data.idSuffix).trigger('otp-written', ["Backspace"]);
+                $('#'+optInputId + (i) + "_" + data.idSuffix).trigger('otp-written', ["Backspace", false]);
+            }
+            if (typeof data.settings.onchange === 'function') {
+                data.settings.onchange("");
             }
             return results;
         },
         focus: function (results, data) {
             $('#'+optInputId + (data.settings.length - 1) + "_" + data.idSuffix).otpdesigner__toggleFocus__(true);
+            return results;
+        },
+        option: function (results, data, args) {
+            if (typeof data.settings === 'undefined') {
+                data.settings = {};
+            }
+            if (!isDefined(args) || args.length < 1 || args.length > 2) {
+                console.error('Arguments number not valid');
+            }
+            else if (args.length === 1) {
+                results.push(data.settings[args[0]]);
+            }
+            else if (args.length === 2) {
+                data.settings[args[0]] = args[1];
+                $('#'+optInputId + (data.settings.length - 1) + "_" + data.idSuffix).data('otpdesigner', data);
+            }
+            return results;
+        },
+        addClass: function (results, data, args) {
+            let $inputs = $('#otp_' + data.idSuffix).find('.otp-fake-input');
+            $inputs.addClass(args[0]??[]);
+            return results;
+        },
+        removeClass: function (results, data, args) {
+            let $inputs = $('#otp_' + data.idSuffix).find('.otp-fake-input');
+            $inputs.addClass(args[0]??[]);
             return results;
         },
         hiddenInput: function (results, data) {
@@ -53,7 +85,8 @@ export const otpdesigner = function (options = {}, ...args) {
                     inputsClasses: '',
                     inputsParentClasses: '',
                     enterClicked: null,
-                    typingDone : null
+                    typingDone : null,
+                    onchange: null
                 },
                 options
             );
@@ -152,7 +185,7 @@ export const otpdesigner = function (options = {}, ...args) {
             let $inputs = $fakeInputsParent.find('.otp-fake-input');
             $inputs.each(function (i) {
                 $($inputs[i]).off('otp-written');
-                $($inputs[i]).on("otp-written", function (event, value) {
+                $($inputs[i]).on("otp-written", function (event, value, triggerChange = true) {
                     if (value === "Backspace") {
                         $($inputs[i]).otpdesigner__fakeInputVal__("");
                         if (i !== 0) $($inputs[i - 1]).otpdesigner__toggleFocus__(true);
@@ -171,6 +204,12 @@ export const otpdesigner = function (options = {}, ...args) {
                         }
                     }
                     collectOtpCode(data, (i === $inputs.length - 1));
+                    if (triggerChange && typeof settings.onchange === 'function') {
+                        let code = $('#otp_hidden_' + data.idSuffix).val();
+                        if (isDefined(code)) code = code.trim();
+                        else code = "";
+                        settings.onchange(code);
+                    }
                 });
                 $($inputs[i]).off("focused");
                 $($inputs[i]).on("focused", function () {

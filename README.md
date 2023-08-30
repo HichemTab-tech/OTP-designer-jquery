@@ -53,14 +53,14 @@ You can install OTP-designer-jquery via npm:
 You can also include OTP-designer-jquery directly from a CDN by adding the following script tag to your HTML file:
 
 ```HTML
-    <script src="https://cdn.jsdelivr.net/gh/HichemTab-tech/OTP-designer-jquery@2.1.0/dist/otpdesigner.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/HichemTab-tech/OTP-designer-jquery@2.2.0/dist/otpdesigner.min.js"></script>
 ```
     
 ### Local Download
 If you prefer to host the library locally, you can download the latest release from the source code and include it in your project:
 
 ```HTML
-  <script src="path/to/otpdesigner.min.js"></script>
+<script src="path/to/otpdesigner.min.js"></script>
 ```
 ## Usage
 
@@ -234,14 +234,15 @@ $('#otp_target').otpdesigner({
 In these examples, the OTP designer is initialized inside the otp_target element with different configurations. The first example demonstrates the basic usage without custom options, while the second example shows a customized OTP input with larger input fields and a length of 8 digits. The third example demonstrates using options as an object to customize the OTP input.
 ## Options
 
-| **Option**                | **Type** | **Default** | **Description**                                                                      |
-|---------------------------|----------|-------------|--------------------------------------------------------------------------------------|
-| **`length`**              | Integer  | 6           | The number of OTP input fields.                                                      |
-| **`onluNumbers`**         | Boolean  | false       | Allow only numeric input.                                                            |
-| **`inputsClasses`**       | String   | ""          | Additional CSS classes to apply to the OTP input fields.                             |
-| **`inputsParentClasses`** | String   | ""          | Additional CSS classes to apply to the parent container of the OTP input fields.     |
-| **`typingDone`**          | Function | null        | A callback function executed when the user completes typing the OTP.                 |
-| **`enterClicked`**        | Function | null        | A callback function executed when the user click on Enter key when he's done typing. |
+| **Option**                | **Type** | **Default** | **Description**                                                                        |
+|---------------------------|----------|-------------|----------------------------------------------------------------------------------------|
+| **`length`**              | Integer  | 6           | The number of OTP input fields.                                                        |
+| **`onluNumbers`**         | Boolean  | false       | Allow only numeric input.                                                              |
+| **`inputsClasses`**       | String   | ""          | Additional CSS classes to apply to the OTP input fields.                               |
+| **`inputsParentClasses`** | String   | ""          | Additional CSS classes to apply to the parent container of the OTP input fields.       |
+| **`typingDone`**          | Function | null        | A callback function executed when the user completes typing the OTP.                   |
+| **`enterClicked`**        | Function | null        | A callback function executed when the user click on Enter key when he's done typing.   |
+| **`onchange`**            | Function | null        | A callback function executed when the OTP code changed (by typing, clearing, setting). |
 
 ## Methods
 The OTP Designer jQuery Plugin provides the following method:
@@ -255,6 +256,9 @@ The OTP Designer jQuery Plugin provides the following method:
 - **`set`**: Set a value to the current OTP code.
 - **`clear`**: Clear the value of the current OTP code.
 - **`focus`**: Request a focus on the OTP code input.
+- **`option`**: Get or set an option dynamically.
+- **`addClass`**: Add style classes to the fake otp inputs `classList`.
+- **`removeClass`**: Remove style classes from the fake otp inputs `classList`.
 - **`hiddenInput`**: Return the hidden input element which stores the OTP code value.
 
 ## Demo
