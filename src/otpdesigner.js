@@ -1,3 +1,5 @@
+// noinspection JSCheckFunctionSignatures
+
 export const otpdesigner = function (options = {}, ...args) {
 
     const optInputId = "opt_input_";
@@ -123,7 +125,7 @@ export const otpdesigner = function (options = {}, ...args) {
             $hiddenInput.attr('name', 'otp_hidden_' + idSuffix);
             $hiddenInput.appendTo($parent);
 
-            let $realInput = $('<textarea class="realInput" maxlength="2" tabindex="-1">-</textarea>');
+            let $realInput = $('<textarea class="realInput" tabindex="-1">-</textarea>');
             $realInput.attr('id', 'otp_real_' + idSuffix);
             $realInput.attr('name', 'otp_real_' + idSuffix);
             $realInput.appendTo($fakeInputsParent);
@@ -146,8 +148,9 @@ export const otpdesigner = function (options = {}, ...args) {
                     }
                 }
             });
-            $realInput.on('paste', (event) => {
-                let pastedText = event.originalEvent.clipboardData.getData('text');
+            $realInput.on('paste', (event, forcedValue = null) => {
+                // noinspection JSUnresolvedReference
+                let pastedText = forcedValue ?? event.originalEvent.clipboardData.getData('text');
                 event.preventDefault();
                 let pastedTextParts = pastedText.split('');
                 pastedTextParts = pastedTextParts.filter(function (value) {
@@ -156,8 +159,8 @@ export const otpdesigner = function (options = {}, ...args) {
                 pastedText = pastedTextParts.join('');
                 if (pastedText.length >= settings.length) {
                     pastedText = pastedText.substring(0, settings.length);
-                    $('[data-otpdesigner-id="' + data.idSuffix + '"]').otpdesigner('set', pastedText);
                 }
+                $('[data-otpdesigner-id="' + data.idSuffix + '"]').otpdesigner('set', pastedText);
             });
 
             for (let i = 0; i < settings.length; i++) {
@@ -197,10 +200,15 @@ export const otpdesigner = function (options = {}, ...args) {
                         loseFocus(data);
                         return;
                     } else {
-                        if (isAcceptedCharacter(value, settings.onlyNumbers)) {
-                            value = value.toLowerCase();
-                            $($inputs[i]).otpdesigner__fakeInputVal__(value);
-                            if (i !== $inputs.length - 1) $($inputs[i + 1]).otpdesigner__toggleFocus__(true);
+                        if (value.length === 1) {
+                            if (isAcceptedCharacter(value, settings.onlyNumbers)) {
+                                value = value.toLowerCase();
+                                $($inputs[i]).otpdesigner__fakeInputVal__(value);
+                                if (i !== $inputs.length - 1) $($inputs[i + 1]).otpdesigner__toggleFocus__(true);
+                            }
+                        }
+                        else{
+                            $realInput.trigger('paste', [value])
                         }
                     }
                     collectOtpCode(data, (i === $inputs.length - 1));
@@ -322,24 +330,29 @@ function toggleRealInputFocus(fakeInput, toFocus) {
     // noinspection JSCheckFunctionSignatures
     let $realInput = $(fakeInput).parents('.fake-inputs').find('.realInput');
     if (toFocus) {
-        $realInput.focus();
+        $realInput[0].focus();
+        // noinspection JSUnresolvedReference
         $realInput[0].setSelectionRange($realInput.val().length, $realInput.val().length);
     }
     else {
-        $realInput.blur();
+        $realInput[0].blur();
     }
 }
 
 function resetRealInput(data) {
     let $realInput = $('#otp_' + data.idSuffix).find('.realInput');
     $realInput.val("-");
-    $realInput[0].setSelectionRange($realInput.val().length, $realInput.val().length);
+    setTimeout(() => {
+        // noinspection JSUnresolvedReference
+        $realInput[0].setSelectionRange($realInput.val().length, $realInput.val().length);
+    }, 10);
 }
 
 function getRealInputValue(data) {
     let $realInput = $('#otp_' + data.idSuffix).find('.realInput');
     if ($realInput.val() === "") return "Backspace";
     else if ($realInput.val() === "-\n") return "Enter";
+    // noinspection JSUnresolvedReference
     return $realInput.val().substring(1);
 }
 
