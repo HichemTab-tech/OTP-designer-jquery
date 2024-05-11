@@ -53,7 +53,7 @@ You can install OTP-designer-jquery via npm:
 You can also include OTP-designer-jquery directly from a CDN by adding the following script tag to your HTML file:
 
 ```HTML
-    <script src="https://cdn.jsdelivr.net/gh/HichemTab-tech/OTP-designer-jquery@2.2.0/dist/otpdesigner.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/HichemTab-tech/OTP-designer-jquery@2.2.1/dist/otpdesigner.min.js"></script>
 ```
     
 ### Local Download

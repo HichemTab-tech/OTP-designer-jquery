@@ -7,7 +7,7 @@ const webpack = require("webpack");
 // noinspection JSUnresolvedReference
 let bannerPlugin = new webpack.BannerPlugin({
     banner: `/*!
- * OTP-designer-jquery v2.2.0
+ * OTP-designer-jquery v2.2.1
  * (c) HichemTech
  * Released under the MIT License.
  * Github: github.com/HichemTab-tech/OTP-designer-jquery
