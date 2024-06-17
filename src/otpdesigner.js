@@ -184,7 +184,7 @@ export const otpdesigner = function (options = {}, ...args) {
                 settings.closeContextMenuElement();
             });
             if (settings.contextMenuElement) {
-                $(settings.contextMenuElement).find('.paste-action').on('click', function (e) {
+                $(settings.contextMenuElement).find('.paste-action').on('click', function () {
                     try {
                         navigator.clipboard.readText()
                             .then(text => {
