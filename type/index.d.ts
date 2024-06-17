@@ -10,6 +10,7 @@ declare module "otpdesigner-jquery" {
         enterClicked?: () => void;
         typingDone?: (code: string) => void;
         onchange?: (code: string) => void;
+        contextMenuElement?: string|HTMLElement|JQuery;
     }
     type OTPDesignerOptions = Partial<OTPDesignerSettings>;
 

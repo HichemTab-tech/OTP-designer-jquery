@@ -1,5 +1,5 @@
 /*!
- * OTP-designer-jquery v2.2.1
+ * OTP-designer-jquery v2.3.0
  * (c) HichemTech
  * Released under the MIT License.
  * Github: github.com/HichemTab-tech/OTP-designer-jquery
@@ -56,6 +56,16 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.otp-fake-input {
 .realInput{
     position: absolute!important;
     z-index: -2000!important;
+}
+
+.dropdown-item {
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.dropdown-item:hover {
+    background-color: #eeeeee;
+    transition: 0.1s;
 }`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
@@ -638,7 +648,25 @@ const otpdesigner = function (options = {}, ...args) {
                     inputsParentClasses: '',
                     enterClicked: null,
                     typingDone : null,
-                    onchange: null
+                    onchange: null,
+                    contextMenuElement: $('<div class="dropdown-menu" id="contextMenu" style="display: none; position: fixed;">\n' +
+                        '    <a class="dropdown-item paste-action">Paste</a>\n' +
+                        '</div>'),
+                    openContextMenuElement: (e) => {
+                        let $contextMenu = $(settings.contextMenuElement);
+                        if (!$contextMenu) return;
+                        $contextMenu.css({
+                            display: 'block',
+                            left: e.pageX,
+                            top: e.pageY
+                        });
+                        $('body').append($contextMenu);
+                    },
+                    closeContextMenuElement: () => {
+                        let $contextMenu = $(settings.contextMenuElement);
+                        if (!$contextMenu) return;
+                        $contextMenu.hide();
+                    }
                 },
                 options
             );
@@ -712,6 +740,29 @@ const otpdesigner = function (options = {}, ...args) {
                 }
                 $('[data-otpdesigner-id="' + data.idSuffix + '"]').otpdesigner('set', pastedText);
             });
+            $(document).on('click', function() {
+                settings.closeContextMenuElement();
+            });
+            if (settings.contextMenuElement) {
+                $(settings.contextMenuElement).find('.paste-action').on('click', function (e) {
+                    try {
+                        navigator.clipboard.readText()
+                            .then(text => {
+                                $realInput.trigger('paste', [text]);
+                            })
+                            .catch(err => {
+                                console.error('Failed to read clipboard contents: ', err);
+                            });
+                    } catch (e) {
+                        if (!window.isSecureContext) {
+                            console.error('navigator.clipboard is not supported in insecure contexts');
+                        }
+                        else {
+                            console.error('navigator.clipboard is not supported', e);
+                        }
+                    }
+                });
+            }
 
             for (let i = 0; i < settings.length; i++) {
                 let $fakeInput = $('<div class="m-2 text-center form-control rounded otp-fake-input"><span class="otp-content"></span></div>');
@@ -781,6 +832,10 @@ const otpdesigner = function (options = {}, ...args) {
                         }
                     }
                 });
+            });
+            $inputs.on('contextmenu', function (e) {
+                e.preventDefault();
+                settings.openContextMenuElement(e);
             });
         }
         else{

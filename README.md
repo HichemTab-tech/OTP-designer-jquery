@@ -53,7 +53,7 @@ You can install OTP-designer-jquery via npm:
 You can also include OTP-designer-jquery directly from a CDN by adding the following script tag to your HTML file:
 
 ```HTML
-    <script src="https://cdn.jsdelivr.net/gh/HichemTab-tech/OTP-designer-jquery@2.2.1/dist/otpdesigner.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/HichemTab-tech/OTP-designer-jquery@2.3.0/dist/otpdesigner.min.js"></script>
 ```
     
 ### Local Download
@@ -232,17 +232,82 @@ $('#otp_target').otpdesigner({
 </html>
 ```
 In these examples, the OTP designer is initialized inside the otp_target element with different configurations. The first example demonstrates the basic usage without custom options, while the second example shows a customized OTP input with larger input fields and a length of 8 digits. The third example demonstrates using options as an object to customize the OTP input.
+
+### Example 4: Using Context Menu Options
+
+```HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OTP Designer jQuery Plugin - Using Context Menu Options</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container">
+    <div class="card mt-5 p-3">
+      <h1 class="h1">OTP Designer jQuery Plugin - Using Context Menu Options</h1>
+      <div id="otp_target"></div>
+      <button class="btn btn-primary mt-3" id="ok">OK</button>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+  <script src="dist/otpdesigner.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#otp_target').otpdesigner({
+        typingDone: function (code) {
+          console.log('Entered OTP code: ' + code);
+        },
+        contextMenuElement: $('<div class="dropdown-menu" id="contextMenu" style="display: none; position: fixed;">\n' +
+                              '    <a class="dropdown-item paste-action">Paste</a>\n' +
+                              '</div>'),
+        openContextMenuElement: function (e) {
+          let $contextMenu = $('#contextMenu');
+          $contextMenu.css({
+            display: 'block',
+            left: e.pageX,
+            top: e.pageY
+          });
+          $('body').append($contextMenu);
+        },
+        closeContextMenuElement: function () {
+          $('#contextMenu').hide();
+        }
+      });
+
+      $('#ok').on('click', function () {
+        let result = $('#otp_target').otpdesigner('code');
+        if (result.done) {
+          alert('Entered OTP code: ' + result.code);
+        } else {
+          alert('Typing incomplete!');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+```
+In this example, the context menu includes a "Paste" action,
+and the element that triggers the paste action has the class `.paste-action`.
+Functions to handle opening and closing the context menu are provided.
+
 ## Options
 
-| **Option**                | **Type** | **Default** | **Description**                                                                        |
-|---------------------------|----------|-------------|----------------------------------------------------------------------------------------|
-| **`length`**              | Integer  | 6           | The number of OTP input fields.                                                        |
-| **`onluNumbers`**         | Boolean  | false       | Allow only numeric input.                                                              |
-| **`inputsClasses`**       | String   | ""          | Additional CSS classes to apply to the OTP input fields.                               |
-| **`inputsParentClasses`** | String   | ""          | Additional CSS classes to apply to the parent container of the OTP input fields.       |
-| **`typingDone`**          | Function | null        | A callback function executed when the user completes typing the OTP.                   |
-| **`enterClicked`**        | Function | null        | A callback function executed when the user click on Enter key when he's done typing.   |
-| **`onchange`**            | Function | null        | A callback function executed when the OTP code changed (by typing, clearing, setting). |
+| **Option**                    | **Type** | **Default** | **Description**                                                                                                                                      |
+|-------------------------------|----------|-------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **`length`**                  | Integer  | 6           | The number of OTP input fields.                                                                                                                      |
+| **`onlyNumbers`**             | Boolean  | false       | Allow only numeric input.                                                                                                                            |
+| **`inputsClasses`**           | String   | ""          | Additional CSS classes to apply to the OTP input fields.                                                                                             |
+| **`inputsParentClasses`**     | String   | ""          | Additional CSS classes to apply to the parent container of the OTP input fields.                                                                     |
+| **`typingDone`**              | Function | null        | A callback function executed when the user completes typing the OTP.                                                                                 |
+| **`enterClicked`**            | Function | null        | A callback function executed when the user click on Enter key when he's done typing.                                                                 |
+| **`onchange`**                | Function | null        | A callback function executed when the OTP code changed (by typing, clearing, setting).                                                               |
+| **`contextMenuElement`**      | jQuery   | null        | A jQuery element used as the context menu for the OTP input fields. The element that triggers the paste action should have the class `paste-action`. |
+| **`openContextMenuElement`**  | Function | null        | A function to handle opening the context menu.                                                                                                       |
+| **`closeContextMenuElement`** | Function | null        | A function to handle closing the context menu.                                                                                                       |
+
 
 ## Methods
 The OTP Designer jQuery Plugin provides the following method:

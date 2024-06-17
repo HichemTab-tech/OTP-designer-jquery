@@ -1,6 +1,6 @@
 {
   "name": "otp-designer-jquery",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "description": "OTP-designer-jquery: Create custom OTP code inputs effortlessly! This jQuery plugin enables designers and developers to design visually appealing, secure OTP code input fields. Enjoy seamless integration and built-in validation events, ensuring a delightful user experience. Simplify OTP input implementation with ease.",
   "keywords": [
     "jquery",
@@ -20,6 +20,7 @@
   "types": "index.d.ts",
   "scripts": {
     "test": "echo \\\"Error: no demo specified\\\" && exit 1",
+    "serve": "vite --host",
     "build": "webpack --config webpack.config.js"
   },
   "author": "HichemTab <konanhichemsinshi@gmail.com>",
@@ -40,6 +41,7 @@
   "devDependencies": {
     "css-loader": "^6.8.1",
     "style-loader": "^3.3.3",
+    "vite": "^5.0.11",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
   }

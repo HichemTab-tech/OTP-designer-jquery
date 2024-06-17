@@ -21,3 +21,13 @@
     position: absolute!important;
     z-index: -2000!important;
 }
+
+.dropdown-item {
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.dropdown-item:hover {
+    background-color: #eeeeee;
+    transition: 0.1s;
+}
