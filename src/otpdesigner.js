@@ -67,7 +67,7 @@ export const otpdesigner = function (options = {}, ...args) {
         },
         removeClass: function (results, data, args) {
             let $inputs = $('#otp_' + data.idSuffix).find('.otp-fake-input');
-            $inputs.addClass(args[0]??[]);
+            $inputs.removeClass(args[0]??[]);
             return results;
         },
         hiddenInput: function (results, data) {
