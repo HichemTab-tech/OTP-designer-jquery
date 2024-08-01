@@ -1,5 +1,5 @@
 /*!
- * OTP-designer-jquery v2.3.0
+ * OTP-designer-jquery v2.3.1
  * (c) HichemTech
  * Released under the MIT License.
  * Github: github.com/HichemTab-tech/OTP-designer-jquery
@@ -744,7 +744,7 @@ const otpdesigner = function (options = {}, ...args) {
                 settings.closeContextMenuElement();
             });
             if (settings.contextMenuElement) {
-                $(settings.contextMenuElement).find('.paste-action').on('click', function (e) {
+                $(settings.contextMenuElement).find('.paste-action').on('click', function () {
                     try {
                         navigator.clipboard.readText()
                             .then(text => {
